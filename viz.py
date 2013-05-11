@@ -106,15 +106,10 @@ def generate_visualization((title, total, line_bar_data, pie_data), (aggregate_l
 
     line_bar_graph = plt.subplot2grid((2, 2), (0, 0), colspan = 2)
     width = 0.1
-    previous_amounts_to_be_stacked_on = None
     color_counter = 0
     for key, group in groupby(line_bar_data, breakdown_function):
         g_amounts = fill_in_void_dates([(g[0], g[1]) for g in group], dates)
-        if previous_amounts_to_be_stacked_on != None:
-            bars = line_bar_graph.bar(range(len(dates)), g_amounts, width, color = colors[color_counter], log = True, bottom = previous_amounts_to_be_stacked_on)
-            previous_amounts_to_be_stacked_on = g_amounts
-        else:
-            bars = line_bar_graph.bar(range(len(dates)), g_amounts, width, color = colors[color_counter], log = True)
+        bars = line_bar_graph.bar(range(len(dates)), g_amounts, width, color = colors[color_counter], log = True)
         bars_labels(line_bar_graph, bars)
         color_counter += 1
     line_bar_graph.set_yscale('log')
